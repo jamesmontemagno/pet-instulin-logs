@@ -263,6 +263,16 @@ public partial class HistoryViewModel : ObservableObject
     {
         _ = LoadHistoryAsync();
     }
+
+    public async Task SelectPetByIdAsync(string petId)
+    {
+        var pet = Pets.FirstOrDefault(p => p.PetId == petId);
+        if (pet != null)
+        {
+            SelectedPet = pet;
+            await LoadHistoryAsync();
+        }
+    }
 }
 
 public class LogEntryGroup

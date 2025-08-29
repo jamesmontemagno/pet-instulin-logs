@@ -279,4 +279,14 @@ public partial class VacationModeViewModel : ObservableObject
             _ = LoadCurrentPlanAsync();
         }
     }
+
+    public async Task SelectPetByIdAsync(string petId)
+    {
+        var pet = Pets.FirstOrDefault(p => p.PetId == petId);
+        if (pet != null)
+        {
+            SelectedPet = pet;
+            await LoadCurrentPlanAsync();
+        }
+    }
 }

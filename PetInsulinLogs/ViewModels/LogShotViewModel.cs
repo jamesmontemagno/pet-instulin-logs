@@ -250,4 +250,15 @@ public partial class LogShotViewModel : ObservableObject
     {
         _ = EvaluateTimingAsync();
     }
+
+    public async Task SelectPetByIdAsync(string petId)
+    {
+        var pet = Pets.FirstOrDefault(p => p.PetId == petId);
+        if (pet != null)
+        {
+            SelectedPet = pet;
+            Units = pet.DefaultUnits;
+            await EvaluateTimingAsync();
+        }
+    }
 }

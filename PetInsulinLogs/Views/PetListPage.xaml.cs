@@ -35,7 +35,31 @@ public partial class PetListPage : ContentPage
     {
         if (sender is Border border && border.BindingContext is Models.Pet pet)
         {
-            await Shell.Current.GoToAsync($"//pets/profile?petId={pet.PetId}");
+            // Show action sheet with pet-specific options
+            var action = await DisplayActionSheet(
+                $"Actions for {pet.Name}", 
+                "Cancel", 
+                null, 
+                "Log Insulin Shot", 
+                "View History", 
+                "Vacation Mode", 
+                "Edit Profile");
+
+            switch (action)
+            {
+                case "Log Insulin Shot":
+                    await Shell.Current.GoToAsync($"//logshot?petId={pet.PetId}");
+                    break;
+                case "View History":
+                    await Shell.Current.GoToAsync($"//history?petId={pet.PetId}");
+                    break;
+                case "Vacation Mode":
+                    await Shell.Current.GoToAsync($"//vacation?petId={pet.PetId}");
+                    break;
+                case "Edit Profile":
+                    await Shell.Current.GoToAsync($"//pets/profile?petId={pet.PetId}");
+                    break;
+            }
         }
     }
 }

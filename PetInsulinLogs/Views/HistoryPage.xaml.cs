@@ -2,11 +2,17 @@ using PetInsulinLogs.ViewModels;
 
 namespace PetInsulinLogs.Views;
 
-public partial class HistoryPage : ContentPage
+[QueryProperty(nameof(PetId), "petId")]
+public partial class HistoryPage : ContentPage, IQueryAttributable
 {
+    private HistoryViewModel? viewModel;
+    
+    public string? PetId { get; set; }
+
     public HistoryPage(HistoryViewModel viewModel)
     {
         InitializeComponent();
+        this.viewModel = viewModel;
         BindingContext = viewModel;
     }
 
@@ -14,9 +20,23 @@ public partial class HistoryPage : ContentPage
     {
         base.OnAppearing();
         
-        if (BindingContext is HistoryViewModel viewModel)
+        if (viewModel != null)
         {
             await viewModel.LoadPetsCommand.ExecuteAsync(null);
+            
+            // If a specific pet ID was provided, select that pet
+            if (!string.IsNullOrEmpty(PetId))
+            {
+                await viewModel.SelectPetByIdAsync(PetId);
+            }
+        }
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.ContainsKey("petId"))
+        {
+            PetId = query["petId"].ToString();
         }
     }
 }

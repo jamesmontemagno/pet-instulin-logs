@@ -9,10 +9,6 @@
 
     <TabBar>
         <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
-        <ShellContent
             Title="Pets"
             ContentTemplate="{DataTemplate views:PetListPage}"
             Route="pets" />
