@@ -12,6 +12,7 @@ public partial class LogShotViewModel : ObservableObject
     private readonly IPetRepository petRepository;
     private readonly IScheduleEngineService scheduleEngine;
     private readonly IVacationPlanRepository vacationPlanRepository;
+    private readonly IUserService userService;
 
     [ObservableProperty]
     private Pet? selectedPet;
@@ -62,12 +63,14 @@ public partial class LogShotViewModel : ObservableObject
         ILogRepository logRepository,
         IPetRepository petRepository,
         IScheduleEngineService scheduleEngine,
-        IVacationPlanRepository vacationPlanRepository)
+        IVacationPlanRepository vacationPlanRepository,
+        IUserService userService)
     {
         this.logRepository = logRepository;
         this.petRepository = petRepository;
         this.scheduleEngine = scheduleEngine;
         this.vacationPlanRepository = vacationPlanRepository;
+        this.userService = userService;
     }
 
     [RelayCommand]
@@ -78,8 +81,7 @@ public partial class LogShotViewModel : ObservableObject
         try
         {
             IsBusy = true;
-            // TODO: Get current user ID from user service
-            var currentUserId = "current-user"; 
+            var currentUserId = await userService.GetCurrentUserIdAsync();
             var pets = await petRepository.GetByUserAsync(currentUserId);
             
             Pets.Clear();
@@ -170,7 +172,7 @@ public partial class LogShotViewModel : ObservableObject
             var logEntry = new LogEntry
             {
                 PetId = SelectedPet.PetId,
-                UserId = "current-user", // TODO: Get from user service
+                UserId = await userService.GetCurrentUserIdAsync(),
                 TimestampUtc = ShotTime.ToUniversalTime(),
                 Units = Units,
                 InjectionSite = InjectionSite,

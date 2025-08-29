@@ -30,6 +30,9 @@ public static class MauiProgram
 	builder.Services.AddSingleton<ITimeService, TimeService>();
 	builder.Services.AddSingleton<IScheduleEngineService, ScheduleEngineService>();
 	builder.Services.AddSingleton<IVacationPlanningService, VacationPlanningService>();
+	builder.Services.AddSingleton<IConnectivityService, ConnectivityService>();
+	builder.Services.AddSingleton<INotificationService, NotificationService>();
+	builder.Services.AddSingleton<IUserService, UserService>();
 
 		// Repositories
 	builder.Services.AddSingleton<IPetRepository, PetRepository>();
