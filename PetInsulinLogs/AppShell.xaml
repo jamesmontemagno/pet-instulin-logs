@@ -20,6 +20,14 @@
             Title="Log Shot"
             ContentTemplate="{DataTemplate views:LogShotPage}"
             Route="logshot" />
+        <ShellContent
+            Title="History"
+            ContentTemplate="{DataTemplate views:HistoryPage}"
+            Route="history" />
+        <ShellContent
+            Title="Vacation"
+            ContentTemplate="{DataTemplate views:VacationModePage}"
+            Route="vacation" />
     </TabBar>
 
     <!-- Onboarding Page -->

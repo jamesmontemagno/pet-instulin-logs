@@ -15,6 +15,11 @@
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <converters:DateTimeToDateConverter x:Key="DateTimeToDateConverter" />
             <converters:DateTimeToTimeConverter x:Key="DateTimeToTimeConverter" />
+            <converters:OnTimeFlagDisplayConverter x:Key="OnTimeFlagDisplayConverter" />
+            <converters:InjectionSiteDisplayConverter x:Key="InjectionSiteDisplayConverter" />
+            <converters:OnTimeFlagColorConverter x:Key="OnTimeFlagColorConverter" />
+            <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter" />
+            <converters:IntNotZeroConverter x:Key="IntNotZeroConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

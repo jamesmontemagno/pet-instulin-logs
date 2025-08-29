@@ -29,6 +29,7 @@ public static class MauiProgram
 	builder.Services.AddSingleton<IIdService, IdService>();
 	builder.Services.AddSingleton<ITimeService, TimeService>();
 	builder.Services.AddSingleton<IScheduleEngineService, ScheduleEngineService>();
+	builder.Services.AddSingleton<IVacationPlanningService, VacationPlanningService>();
 
 		// Repositories
 	builder.Services.AddSingleton<IPetRepository, PetRepository>();
@@ -39,12 +40,16 @@ public static class MauiProgram
 		builder.Services.AddTransient<ViewModels.PetListViewModel>();
 		builder.Services.AddTransient<ViewModels.PetProfileViewModel>();
 		builder.Services.AddTransient<ViewModels.LogShotViewModel>();
+		builder.Services.AddTransient<ViewModels.HistoryViewModel>();
+		builder.Services.AddTransient<ViewModels.VacationModeViewModel>();
 
 		// Views
 		builder.Services.AddTransient<Views.PetListPage>();
 		builder.Services.AddTransient<Views.PetProfilePage>();
 		builder.Services.AddTransient<Views.OnboardingPage>();
 		builder.Services.AddTransient<Views.LogShotPage>();
+		builder.Services.AddTransient<Views.HistoryPage>();
+		builder.Services.AddTransient<Views.VacationModePage>();
 
 		var app = builder.Build();
 		ServiceHelper.Initialize(app.Services);
