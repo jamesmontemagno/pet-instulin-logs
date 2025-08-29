@@ -13,6 +13,9 @@ This is a .NET MAUI single-project mobile app named `PetInsulinLogs` (see `PetIn
 - Single-project MAUI: The project uses <SingleProject>true</SingleProject> — do not create separate projects for platforms unless absolutely necessary.
 - Platform code location: platform-specific code lives under `Platforms/{Android,iOS,MacCatalyst,Windows,Tizen}`. If you need native APIs, add code there (follow existing simple examples: `MainActivity.cs`, `AppDelegate.cs`).
 - Fonts & images: Add new fonts to `Resources/Fonts/` and register in `MauiProgram.cs`. Add images to `Resources/Images/` and update .csproj only when special resizing is needed.
+ - One type per file (important):
+   - Models: Each model must reside in its own file under `PetInsulinLogs/Models` (e.g., `Pet.cs`, `LogEntry.cs`, `VacationPlan.cs`, `EntityValidation.cs`). Do not group multiple model classes in a single file.
+   - Interfaces: Each service interface must reside in its own file under `PetInsulinLogs/Services` (e.g., `IPetRepository.cs`, `ILogRepository.cs`, `IVacationPlanRepository.cs`, `IIdService.cs`, `ITimeService.cs`). Avoid catch-all files like `Interfaces.cs`.
 
 ## Build / run / debug (developer workflow)
 

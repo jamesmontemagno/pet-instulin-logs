@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetInsulinLogs.ViewModels"
+             xmlns:models="clr-namespace:PetInsulinLogs.Models"
+             x:Class="PetInsulinLogs.Views.PetProfilePage"
+             x:DataType="vm:PetProfileViewModel"
+             Title="Pet Profile">
+    <ScrollView Padding="20">
+        <StackLayout Spacing="25">
+            
+            <!-- Header Section -->
+            <Border BackgroundColor="{DynamicResource Primary}" 
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 15" 
+                    Padding="20">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="5" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="15">
+                    <Label Text="Pet Information" 
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           TextColor="White" 
+                           HorizontalOptions="Center"/>
+                    
+                    <!-- Pet Name -->
+                    <StackLayout>
+                        <Label Text="Pet Name" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+                        <Entry x:Name="NameEntry" 
+                               Text="{Binding Pet.Name}" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               FontSize="16" 
+                               Placeholder="Enter your pet's name"/>
+                    </StackLayout>
+                    
+                    <!-- Default Units -->
+                    <StackLayout>
+                        <Label Text="Default Insulin Units" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+                        <Entry x:Name="UnitsEntry" 
+                               Text="{Binding Pet.DefaultUnits}" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               FontSize="16" 
+                               Keyboard="Numeric" 
+                               Placeholder="e.g., 2.5"/>
+                    </StackLayout>
+                    
+                    <!-- Interval Hours -->
+                    <StackLayout>
+                        <Label Text="Injection Interval (hours)" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+                        <Entry x:Name="IntervalEntry" 
+                               Text="{Binding Pet.IntervalHours}" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               FontSize="16" 
+                               Keyboard="Numeric" 
+                               Placeholder="12"/>
+                    </StackLayout>
+                </StackLayout>
+            </Border>
+            
+            <!-- Feeding Schedule Section -->
+            <Border BackgroundColor="LightBlue" 
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 15" 
+                    Padding="20">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="5" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="15">
+                    <Label Text="🍽️ Feeding Schedule" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="DarkBlue"/>
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Morning Time" FontSize="14" FontAttributes="Bold" TextColor="DarkBlue"/>
+                            <TimePicker x:Name="MorningTimePicker" 
+                                        BackgroundColor="White" 
+                                        TextColor="Black"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Evening Time" FontSize="14" FontAttributes="Bold" TextColor="DarkBlue"/>
+                            <TimePicker x:Name="EveningTimePicker" 
+                                        BackgroundColor="White" 
+                                        TextColor="Black"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <StackLayout>
+                        <Label Text="Food Type" FontSize="14" FontAttributes="Bold" TextColor="DarkBlue"/>
+                        <Entry x:Name="FoodTypeEntry" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               Placeholder="e.g., Hill's Prescription Diet"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <Label Text="Food Amount" FontSize="14" FontAttributes="Bold" TextColor="DarkBlue"/>
+                        <Entry x:Name="FoodAmountEntry" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               Placeholder="e.g., 1/2 cup"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <Label Text="Special Instructions" FontSize="14" FontAttributes="Bold" TextColor="DarkBlue"/>
+                        <Editor x:Name="FeedingInstructionsEditor" 
+                                BackgroundColor="White" 
+                                TextColor="Black" 
+                                HeightRequest="80" 
+                                Placeholder="Any special feeding instructions..."/>
+                    </StackLayout>
+                </StackLayout>
+            </Border>
+            
+            <!-- Vet Information Section -->
+            <Border BackgroundColor="LightGreen" 
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 15" 
+                    Padding="20">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="5" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="15">
+                    <Label Text="🏥 Veterinary Information" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="DarkGreen"/>
+                    
+                    <StackLayout>
+                        <Label Text="Clinic Name" FontSize="14" FontAttributes="Bold" TextColor="DarkGreen"/>
+                        <Entry x:Name="ClinicNameEntry" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               Placeholder="Veterinary clinic name"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <Label Text="Veterinarian Name" FontSize="14" FontAttributes="Bold" TextColor="DarkGreen"/>
+                        <Entry x:Name="VetNameEntry" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               Placeholder="Dr. Smith"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <Label Text="Phone Number" FontSize="14" FontAttributes="Bold" TextColor="DarkGreen"/>
+                        <Entry x:Name="VetPhoneEntry" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               Keyboard="Telephone" 
+                               Placeholder="(555) 123-4567"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <Label Text="Address" FontSize="14" FontAttributes="Bold" TextColor="DarkGreen"/>
+                        <Entry x:Name="VetAddressEntry" 
+                               BackgroundColor="White" 
+                               TextColor="Black" 
+                               Placeholder="123 Main St, City, State"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <Label Text="Notes" FontSize="14" FontAttributes="Bold" TextColor="DarkGreen"/>
+                        <Editor x:Name="VetNotesEditor" 
+                                BackgroundColor="White" 
+                                TextColor="Black" 
+                                HeightRequest="60" 
+                                Placeholder="Special notes about your vet..."/>
+                    </StackLayout>
+                </StackLayout>
+            </Border>
+            
+            <!-- Emergency Contacts Section -->
+            <Border BackgroundColor="LightCoral" 
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 15" 
+                    Padding="20">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.3" Radius="5" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="15">
+                    <Label Text="🚨 Emergency Contacts" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="DarkRed"/>
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Primary Contact" FontSize="14" FontAttributes="Bold" TextColor="DarkRed"/>
+                            <Entry x:Name="PrimaryContactEntry" 
+                                   BackgroundColor="White" 
+                                   TextColor="Black" 
+                                   Placeholder="Contact name"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Phone" FontSize="14" FontAttributes="Bold" TextColor="DarkRed"/>
+                            <Entry x:Name="PrimaryPhoneEntry" 
+                                   BackgroundColor="White" 
+                                   TextColor="Black" 
+                                   Keyboard="Telephone" 
+                                   Placeholder="Phone number"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Secondary Contact" FontSize="14" FontAttributes="Bold" TextColor="DarkRed"/>
+                            <Entry x:Name="SecondaryContactEntry" 
+                                   BackgroundColor="White" 
+                                   TextColor="Black" 
+                                   Placeholder="Contact name"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Phone" FontSize="14" FontAttributes="Bold" TextColor="DarkRed"/>
+                            <Entry x:Name="SecondaryPhoneEntry" 
+                                   BackgroundColor="White" 
+                                   TextColor="Black" 
+                                   Keyboard="Telephone" 
+                                   Placeholder="Phone number"/>
+                        </StackLayout>
+                    </Grid>
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Emergency Vet" FontSize="14" FontAttributes="Bold" TextColor="DarkRed"/>
+                            <Entry x:Name="EmergencyVetEntry" 
+                                   BackgroundColor="White" 
+                                   TextColor="Black" 
+                                   Placeholder="Emergency clinic"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Phone" FontSize="14" FontAttributes="Bold" TextColor="DarkRed"/>
+                            <Entry x:Name="EmergencyVetPhoneEntry" 
+                                   BackgroundColor="White" 
+                                   TextColor="Black" 
+                                   Keyboard="Telephone" 
+                                   Placeholder="Emergency phone"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Border>
+            
+            <!-- Action Buttons -->
+            <StackLayout Spacing="15">
+                <Button x:Name="SaveButton" 
+                        Text="Save Pet Information" 
+                        BackgroundColor="{DynamicResource Primary}" 
+                        TextColor="White" 
+                        FontSize="18" 
+                        FontAttributes="Bold" 
+                        CornerRadius="25" 
+                        HeightRequest="50" 
+                        Clicked="OnSaveClicked"/>
+                
+                <Button x:Name="ShareButton" 
+                        Text="Generate Share Code" 
+                        BackgroundColor="Orange" 
+                        TextColor="White" 
+                        FontSize="16" 
+                        CornerRadius="25" 
+                        HeightRequest="45" 
+                        Clicked="OnShareClicked"/>
+            </StackLayout>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

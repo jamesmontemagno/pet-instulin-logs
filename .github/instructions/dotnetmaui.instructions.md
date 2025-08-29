@@ -5,6 +5,14 @@ applyTo: '**/*.xaml, **/*.cs'
 
 # .NET MAUI
 
+## I like my structure 
+- DTOs and Models in a `Models` folder.
+- Services (data access, API clients, business logic) in a `Services` folder.
+- Views (XAML pages and code-behind) in a `Views` folder.
+- ViewModels in a `ViewModels` folder.
+- Resources (images, fonts, styles) in a `Resources` folder.
+- Use partial classes for XAML code-behind files.
+
 ## MVVM
 - Prefer MVVM for complex UI components and pages.
 - Use data binding with `{Binding}` for properties and commands.

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetInsulinLogs.ViewModels"
+             xmlns:models="clr-namespace:PetInsulinLogs.Models"
+             x:Class="PetInsulinLogs.Views.PetListPage"
+             x:DataType="vm:PetListViewModel"
+             Title="My Pets">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Priority="0" Order="Primary" Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <!-- Empty state -->
+        <StackLayout IsVisible="{Binding IsEmpty}" 
+                     Padding="40" 
+                     Spacing="20" 
+                     VerticalOptions="Center">
+            <Label Text="🐾" 
+                   FontSize="64" 
+                   HorizontalOptions="Center"/>
+            <Label Text="No pets yet!" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center"/>
+            <Label Text="Get started by adding your first pet or joining with a share code." 
+                   FontSize="16" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center" 
+                   LineHeight="1.4"/>
+            <Button Text="Get Started" 
+                    BackgroundColor="{DynamicResource Primary}" 
+                    TextColor="White" 
+                    CornerRadius="25" 
+                    HeightRequest="50" 
+                    FontSize="18" 
+                    FontAttributes="Bold" 
+                    Command="{Binding NavigateToOnboardingCommand}"/>
+        </StackLayout>
+
+        <!-- Pet list -->
+        <CollectionView ItemsSource="{Binding Items}" 
+                        RemainingItemsThreshold="2"
+                        IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Pet">
+                    <Border Margin="8" 
+                            Padding="16" 
+                            BackgroundColor="White" 
+                            Stroke="LightGray" 
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 12">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Opacity="0.1" Radius="4" Offset="2,2"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Text="🐾" FontSize="24" HorizontalOptions="Start"/>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="4">
+                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="{Binding DefaultUnits, StringFormat='Default: {0} units'}" 
+                        FontSize="14" TextColor="Gray"/>
+                    <Label Text="{Binding IntervalHours, StringFormat='Every {0} hours'}" 
+                        FontSize="14" TextColor="Gray"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPetTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

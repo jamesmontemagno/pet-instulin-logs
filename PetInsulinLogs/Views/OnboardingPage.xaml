@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="PetInsulinLogs.Views.OnboardingPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Welcome"
+             BackgroundColor="{DynamicResource Primary}">
+    <ScrollView>
+        <StackLayout Padding="40,60,40,40" Spacing="30">
+            
+            <!-- App Icon/Logo -->
+            <Frame BackgroundColor="White" 
+                   CornerRadius="30" 
+                   WidthRequest="120" 
+                   HeightRequest="120" 
+                   HorizontalOptions="Center" 
+                   HasShadow="True">
+                <Label Text="🐾💉" 
+                       FontSize="48" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"/>
+            </Frame>
+            
+            <!-- Welcome Title -->
+            <Label Text="Welcome to Pet Insulin Logs" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center"/>
+            
+            <!-- Description -->
+            <Label Text="Keep track of your pet's insulin injections, feeding times, and health information all in one place." 
+                   FontSize="16" 
+                   TextColor="White" 
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center" 
+                   LineHeight="1.4"/>
+            
+            <!-- Features List -->
+            <StackLayout Spacing="15" Margin="0,20,0,0">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <Label Text="⏰" FontSize="24" VerticalOptions="Center"/>
+                    <Label Text="Track insulin schedules and get reminders" 
+                           FontSize="14" 
+                           TextColor="White" 
+                           VerticalOptions="Center" 
+                           FlexLayout.Grow="1"/>
+                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <Label Text="📊" FontSize="24" VerticalOptions="Center"/>
+                    <Label Text="Monitor injection sites and timing" 
+                           FontSize="14" 
+                           TextColor="White" 
+                           VerticalOptions="Center" 
+                           FlexLayout.Grow="1"/>
+                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <Label Text="🍽️" FontSize="24" VerticalOptions="Center"/>
+                    <Label Text="Manage feeding schedules and plans" 
+                           FontSize="14" 
+                           TextColor="White" 
+                           VerticalOptions="Center" 
+                           FlexLayout.Grow="1"/>
+                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <Label Text="👥" FontSize="24" VerticalOptions="Center"/>
+                    <Label Text="Share with family and caretakers" 
+                           FontSize="14" 
+                           TextColor="White" 
+                           VerticalOptions="Center" 
+                           FlexLayout.Grow="1"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <!-- CTA Button -->
+            <Button Text="Add Your First Pet" 
+                    FontSize="18" 
+                    FontAttributes="Bold" 
+                    BackgroundColor="White" 
+                    TextColor="{DynamicResource Primary}" 
+                    CornerRadius="25" 
+                    HeightRequest="50" 
+                    Margin="0,30,0,0" 
+                    Clicked="OnAddFirstPetClicked"/>
+            
+            <!-- Secondary Action -->
+            <Button Text="Join with Share Code" 
+                    FontSize="16" 
+                    BackgroundColor="Transparent" 
+                    TextColor="White" 
+                    BorderColor="White" 
+                    BorderWidth="1" 
+                    CornerRadius="25" 
+                    HeightRequest="45" 
+                    Clicked="OnJoinWithCodeClicked"/>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

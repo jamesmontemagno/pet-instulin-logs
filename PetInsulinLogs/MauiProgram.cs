@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using PetInsulinLogs.Services;
+using PetInsulinLogs.Services.Interfaces;
 
 namespace PetInsulinLogs;
 
@@ -19,6 +21,30 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
+		// SQLite database path
+		var dbPath = Path.Combine(FileSystem.AppDataDirectory, "petinsulin.db3");
+	builder.Services.AddSingleton<ISqliteConnectionProvider>(_ => new SqliteConnectionProvider(dbPath));
+
+		// Core services
+	builder.Services.AddSingleton<IIdService, IdService>();
+	builder.Services.AddSingleton<ITimeService, TimeService>();
+
+		// Repositories
+	builder.Services.AddSingleton<IPetRepository, PetRepository>();
+	builder.Services.AddSingleton<ILogRepository, LogRepository>();
+	builder.Services.AddSingleton<IVacationPlanRepository, VacationPlanRepository>();
+
+		// ViewModels
+		builder.Services.AddTransient<ViewModels.PetListViewModel>();
+		builder.Services.AddTransient<ViewModels.PetProfileViewModel>();
+
+		// Views
+		builder.Services.AddTransient<Views.PetListPage>();
+		builder.Services.AddTransient<Views.PetProfilePage>();
+		builder.Services.AddTransient<Views.OnboardingPage>();
+
+		var app = builder.Build();
+		ServiceHelper.Initialize(app.Services);
+		return app;
 	}
 }
