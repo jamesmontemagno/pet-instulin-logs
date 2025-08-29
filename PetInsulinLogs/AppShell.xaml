@@ -16,6 +16,10 @@
             Title="Pets"
             ContentTemplate="{DataTemplate views:PetListPage}"
             Route="pets" />
+        <ShellContent
+            Title="Log Shot"
+            ContentTemplate="{DataTemplate views:LogShotPage}"
+            Route="logshot" />
     </TabBar>
 
     <!-- Onboarding Page -->

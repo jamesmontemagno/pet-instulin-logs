@@ -13,6 +13,8 @@
 
             <!-- Converters -->
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:DateTimeToDateConverter x:Key="DateTimeToDateConverter" />
+            <converters:DateTimeToTimeConverter x:Key="DateTimeToTimeConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

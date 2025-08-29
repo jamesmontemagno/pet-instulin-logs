@@ -28,6 +28,7 @@ public static class MauiProgram
 		// Core services
 	builder.Services.AddSingleton<IIdService, IdService>();
 	builder.Services.AddSingleton<ITimeService, TimeService>();
+	builder.Services.AddSingleton<IScheduleEngineService, ScheduleEngineService>();
 
 		// Repositories
 	builder.Services.AddSingleton<IPetRepository, PetRepository>();
@@ -37,11 +38,13 @@ public static class MauiProgram
 		// ViewModels
 		builder.Services.AddTransient<ViewModels.PetListViewModel>();
 		builder.Services.AddTransient<ViewModels.PetProfileViewModel>();
+		builder.Services.AddTransient<ViewModels.LogShotViewModel>();
 
 		// Views
 		builder.Services.AddTransient<Views.PetListPage>();
 		builder.Services.AddTransient<Views.PetProfilePage>();
 		builder.Services.AddTransient<Views.OnboardingPage>();
+		builder.Services.AddTransient<Views.LogShotPage>();
 
 		var app = builder.Build();
 		ServiceHelper.Initialize(app.Services);
