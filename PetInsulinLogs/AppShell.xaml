@@ -9,6 +9,10 @@
 
     <TabBar>
         <ShellContent
+            Title="Dashboard"
+            ContentTemplate="{DataTemplate views:DashboardPage}"
+            Route="dashboard" />
+        <ShellContent
             Title="Pets"
             ContentTemplate="{DataTemplate views:PetListPage}"
             Route="pets" />

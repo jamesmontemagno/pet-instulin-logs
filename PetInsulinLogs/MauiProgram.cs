@@ -40,6 +40,7 @@ public static class MauiProgram
 	builder.Services.AddSingleton<IVacationPlanRepository, VacationPlanRepository>();
 
 		// ViewModels
+		builder.Services.AddTransient<ViewModels.DashboardViewModel>();
 		builder.Services.AddTransient<ViewModels.PetListViewModel>();
 		builder.Services.AddTransient<ViewModels.PetProfileViewModel>();
 		builder.Services.AddTransient<ViewModels.LogShotViewModel>();
@@ -47,6 +48,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<ViewModels.VacationModeViewModel>();
 
 		// Views
+		builder.Services.AddTransient<Views.DashboardPage>();
 		builder.Services.AddTransient<Views.PetListPage>();
 		builder.Services.AddTransient<Views.PetProfilePage>();
 		builder.Services.AddTransient<Views.OnboardingPage>();

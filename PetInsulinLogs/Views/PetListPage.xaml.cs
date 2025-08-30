@@ -18,12 +18,6 @@ public partial class PetListPage : ContentPage
         viewModel = ServiceHelper.Get<PetListViewModel>();
         BindingContext = viewModel;
         await viewModel.LoadAsync();
-        
-        // Navigate to onboarding if no pets
-        if (viewModel.IsEmpty)
-        {
-            await Shell.Current.GoToAsync("//onboarding");
-        }
     }
 
     private async void OnAddClicked(object sender, EventArgs e)
