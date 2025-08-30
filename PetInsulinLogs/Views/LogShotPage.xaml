@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="PetInsulinLogs.Views.LogShotPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetInsulinLogs.ViewModels"
+             xmlns:models="clr-namespace:PetInsulinLogs.Models"
+             Title="Log Insulin Shot"
+             x:DataType="vm:LogShotViewModel">
+
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Warning Banner -->
+            <Border Grid.Row="0" 
+                    BackgroundColor="Orange" 
+                    Stroke="DarkOrange"
+                    StrokeThickness="1"
+                    Padding="12"
+                    IsVisible="{Binding HasWarning}">
+                <Label Text="{Binding WarningMessage}" 
+                       FontSize="14"
+                       TextColor="White"
+                       FontAttributes="Bold" />
+            </Border>
+
+            <!-- Pet Selection -->
+            <StackLayout Grid.Row="1" Spacing="8">
+                <Label Text="Pet" 
+                       FontSize="16" 
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+                <Picker Title="Select Pet"
+                        ItemsSource="{Binding Pets}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedPet}"
+                        SemanticProperties.Description="Select which pet you are logging an insulin shot for" />
+            </StackLayout>
+
+            <!-- Shot Time -->
+            <StackLayout Grid.Row="2" Spacing="8">
+                <Label Text="Shot Time" FontSize="16" FontAttributes="Bold" />
+                <StackLayout Orientation="Horizontal">
+                    <DatePicker Date="{Binding ShotDate}" />
+                    <TimePicker Time="{Binding ShotTimeOfDay}" />
+                </StackLayout>
+            </StackLayout>
+
+            <!-- Units -->
+            <StackLayout Grid.Row="3" Spacing="8">
+                <Label Text="Insulin Units" 
+                       FontSize="16" 
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+                <Entry Text="{Binding Units}" 
+                       Keyboard="Numeric"
+                       Placeholder="0.0"
+                       SemanticProperties.Description="Enter the number of insulin units to administer" />
+            </StackLayout>
+
+            <!-- Injection Site -->
+            <StackLayout Grid.Row="4" Spacing="8">
+                <Label Text="Injection Site" FontSize="16" FontAttributes="Bold" />
+                <Picker Title="Select Site"
+                        ItemsSource="{Binding InjectionSites}"
+                        SelectedItem="{Binding InjectionSite}" />
+            </StackLayout>
+
+            <!-- Food Given -->
+            <StackLayout Grid.Row="5" Spacing="8">
+                <Label Text="Food Given" FontSize="16" FontAttributes="Bold" />
+                <CheckBox IsChecked="{Binding FoodGiven}" />
+            </StackLayout>
+
+            <!-- Food Details (shown when food given) -->
+            <StackLayout Grid.Row="6" 
+                         Spacing="8" 
+                         IsVisible="{Binding FoodGiven}">
+                <Label Text="Food Type" FontSize="14" />
+                <Entry Text="{Binding FoodType}" 
+                       Placeholder="Food type/brand" />
+                <Label Text="Food Amount" FontSize="14" />
+                <Entry Text="{Binding FoodAmount}" 
+                       Placeholder="Amount given" />
+            </StackLayout>
+
+            <!-- Notes -->
+            <StackLayout Grid.Row="7" Spacing="8">
+                <Label Text="Notes" FontSize="16" FontAttributes="Bold" />
+                <Editor Text="{Binding Notes}" 
+                        Placeholder="Optional notes about this shot"
+                        HeightRequest="80" />
+            </StackLayout>
+
+            <!-- Blood Glucose Notes -->
+            <StackLayout Grid.Row="8" Spacing="8">
+                <Label Text="Blood Glucose Notes" FontSize="16" FontAttributes="Bold" />
+                <Editor Text="{Binding BgNotes}" 
+                        Placeholder="Optional BG readings or notes"
+                        HeightRequest="60" />
+            </StackLayout>
+
+            <!-- Submit Button -->
+            <Button Grid.Row="9"
+                    Text="Log Shot"
+                    Command="{Binding SubmitLogCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    Margin="0,16"
+                    SemanticProperties.Description="Save this insulin shot log entry" />
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator Grid.Row="10"
+                               IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               SemanticProperties.Description="Saving shot log" />
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

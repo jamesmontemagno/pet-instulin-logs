@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="PetInsulinLogs.Views.HistoryPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetInsulinLogs.ViewModels"
+             xmlns:models="clr-namespace:PetInsulinLogs.Models"
+             Title="History &amp; Insights"
+             x:DataType="vm:HistoryViewModel">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Filters Section -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal" Padding="16,8">
+            <StackLayout Orientation="Horizontal" Spacing="12">
+                <!-- Pet Selection -->
+                <Frame BackgroundColor="{StaticResource Gray100}" Padding="8">
+                    <StackLayout>
+                        <Label Text="Pet" FontSize="12" />
+                        <Picker ItemsSource="{Binding Pets}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedItem="{Binding SelectedPet}"
+                                WidthRequest="120" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Date Range -->
+                <Frame BackgroundColor="{StaticResource Gray100}" Padding="8">
+                    <StackLayout>
+                        <Label Text="From" FontSize="12" />
+                        <DatePicker Date="{Binding StartDate}" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="{StaticResource Gray100}" Padding="8">
+                    <StackLayout>
+                        <Label Text="To" FontSize="12" />
+                        <DatePicker Date="{Binding EndDate}" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Timing Filter -->
+                <Frame BackgroundColor="{StaticResource Gray100}" Padding="8">
+                    <StackLayout>
+                        <Label Text="Timing" FontSize="12" />
+                        <Picker ItemsSource="{Binding OnTimeFilterOptions}"
+                                SelectedItem="{Binding SelectedOnTimeFilter}"
+                                WidthRequest="100">
+                            <Picker.ItemDisplayBinding>
+                                <Binding Converter="{StaticResource OnTimeFlagDisplayConverter}" />
+                            </Picker.ItemDisplayBinding>
+                        </Picker>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Site Filter -->
+                <Frame BackgroundColor="{StaticResource Gray100}" Padding="8">
+                    <StackLayout>
+                        <Label Text="Site" FontSize="12" />
+                        <Picker ItemsSource="{Binding SiteFilterOptions}"
+                                SelectedItem="{Binding SelectedSiteFilter}"
+                                WidthRequest="120">
+                            <Picker.ItemDisplayBinding>
+                                <Binding Converter="{StaticResource InjectionSiteDisplayConverter}" />
+                            </Picker.ItemDisplayBinding>
+                        </Picker>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Clear Filters -->
+                <Button Text="Clear"
+                        Command="{Binding ClearFiltersCommand}"
+                        BackgroundColor="{StaticResource Secondary}"
+                        HeightRequest="40" />
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Statistics Section -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*" Padding="16,8">
+            <Frame Grid.Column="0" BackgroundColor="{StaticResource Primary}" Padding="12" Margin="2">
+                <StackLayout>
+                    <Label Text="{Binding TotalEntries}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="Total Shots" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Grid.Column="1" BackgroundColor="Green" Padding="12" Margin="2">
+                <StackLayout>
+                    <Label Text="{Binding OnTimePercentage, StringFormat='{0:F0}%'}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="On Time" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Grid.Column="2" BackgroundColor="Orange" Padding="12" Margin="2">
+                <StackLayout>
+                    <Label Text="{Binding AverageDeviation, StringFormat='{0:F0}m'}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="Avg Deviation" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Grid.Column="3" BackgroundColor="{StaticResource Secondary}" Padding="12" Margin="2">
+                <StackLayout>
+                    <Label Text="{Binding TotalUnits, StringFormat='{0:F1}u'}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    <Label Text="Total Units" FontSize="12" TextColor="White" HorizontalOptions="Center" />
+                </StackLayout>
+            </Frame>
+        </Grid>
+
+        <!-- Log Entries List -->
+        <CollectionView Grid.Row="2" 
+                        ItemsSource="{Binding GroupedLogEntries}"
+                        IsGrouped="True"
+                        Margin="16,0">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="vm:LogEntryGroup">
+                    <Grid Padding="0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" 
+                               Text="{Binding DateDisplay}" 
+                               FontSize="16" 
+                               FontAttributes="Bold" />
+                        <Label Grid.Column="1" 
+                               Text="{Binding Count, StringFormat='{0} shots'}" 
+                               FontSize="14" 
+                               TextColor="{StaticResource Gray600}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:LogEntry">
+                    <Frame Padding="12" Margin="0,2" BackgroundColor="{StaticResource Gray100}">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <!-- Time -->
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding TimestampUtc, StringFormat='{0:HH:mm}'}" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding OnTimeFlag}" 
+                                       FontSize="12" 
+                                       TextColor="{Binding OnTimeFlag, Converter={StaticResource OnTimeFlagColorConverter}}" />
+                            </StackLayout>
+
+                            <!-- Details -->
+                            <StackLayout Grid.Column="1" Spacing="4" Margin="12,0">
+                                <Label Text="{Binding Units, StringFormat='{0:F1} units'}" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding InjectionSite}" 
+                                       FontSize="12" 
+                                       TextColor="{StaticResource Gray600}" />
+                                <Label Text="{Binding Notes}" 
+                                       FontSize="12" 
+                                       TextColor="{StaticResource Gray600}"
+                                       IsVisible="{Binding Notes, Converter={StaticResource StringNotEmptyConverter}}" />
+                            </StackLayout>
+
+                            <!-- Icons -->
+                            <StackLayout Grid.Column="2" VerticalOptions="Center">
+                                <Label Text="🍽️" 
+                                       FontSize="16" 
+                                       IsVisible="{Binding FoodGiven}" />
+                                <Label Text="{Binding DeviationMinutes, StringFormat='{0:+#;-#;0}m'}" 
+                                       FontSize="10" 
+                                       TextColor="{StaticResource Gray600}" 
+                                       IsVisible="{Binding DeviationMinutes, Converter={StaticResource IntNotZeroConverter}}" />
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="2"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           VerticalOptions="Center" />
+    </Grid>
+
+</ContentPage>

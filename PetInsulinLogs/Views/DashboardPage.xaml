@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetInsulinLogs.ViewModels"
+             xmlns:models="clr-namespace:PetInsulinLogs.Models"
+             x:Class="PetInsulinLogs.Views.DashboardPage"
+             x:DataType="vm:DashboardViewModel"
+             Title="Dashboard">
+
+    <ScrollView>
+        <StackLayout Padding="16" Spacing="20">
+            
+            <!-- Welcome Header -->
+            <StackLayout Spacing="8">
+                <Label Text="🏠 Pet Care Dashboard" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"/>
+                <Label Text="Manage your pets' insulin care" 
+                       FontSize="16" 
+                       TextColor="Gray" 
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+
+            <!-- Quick Actions Card -->
+            <Border BackgroundColor="White" 
+                    Stroke="LightGray" 
+                    StrokeThickness="1" 
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.1" Radius="4" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="12">
+                    <Label Text="Quick Actions" FontSize="18" FontAttributes="Bold"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                        <Button Grid.Row="0" Grid.Column="0" 
+                                Text="🩺 Log Shot" 
+                                BackgroundColor="{DynamicResource Primary}" 
+                                TextColor="White" 
+                                CornerRadius="8" 
+                                Command="{Binding NavigateToLogShotCommand}"/>
+                        <Button Grid.Row="0" Grid.Column="1" 
+                                Text="📊 View History" 
+                                BackgroundColor="{DynamicResource Secondary}" 
+                                TextColor="White" 
+                                CornerRadius="8" 
+                                Command="{Binding NavigateToHistoryCommand}"/>
+                        <Button Grid.Row="1" Grid.Column="0" 
+                                Text="🏖️ Vacation Mode" 
+                                BackgroundColor="Orange" 
+                                TextColor="White" 
+                                CornerRadius="8" 
+                                Command="{Binding NavigateToVacationCommand}"/>
+                        <Button Grid.Row="1" Grid.Column="1" 
+                                Text="🐾 Add Pet" 
+                                BackgroundColor="Green" 
+                                TextColor="White" 
+                                CornerRadius="8" 
+                                Command="{Binding AddPetCommand}"/>
+                    </Grid>
+                </StackLayout>
+            </Border>
+
+            <!-- Pet Selection & Stats -->
+            <Border BackgroundColor="White" 
+                    Stroke="LightGray" 
+                    StrokeThickness="1" 
+                    StrokeShape="RoundRectangle 12"
+                    Padding="16"
+                    IsVisible="{Binding HasPets}">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.1" Radius="4" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="16">
+                    <Label Text="Your Pets" FontSize="18" FontAttributes="Bold"/>
+                    
+                    <!-- Pet Cards -->
+                    <CollectionView ItemsSource="{Binding Pets}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:PetDashboardInfo">
+                                <Border Margin="0,0,0,12" 
+                                        Padding="16" 
+                                        BackgroundColor="LightBlue" 
+                                        Stroke="DodgerBlue" 
+                                        StrokeThickness="1" 
+                                        StrokeShape="RoundRectangle 8">
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                                        <!-- Pet Name and Icon -->
+                                        <Label Grid.Row="0" Grid.Column="0" 
+                                               Text="🐾" 
+                                               FontSize="24" 
+                                               VerticalOptions="Center"/>
+                                        <Label Grid.Row="0" Grid.Column="1" 
+                                               Text="{Binding Pet.Name}" 
+                                               FontSize="20" 
+                                               FontAttributes="Bold" 
+                                               VerticalOptions="Center" 
+                                               Margin="12,0,0,0"/>
+                                        <Button Grid.Row="0" Grid.Column="2" 
+                                                Text="Actions" 
+                                                BackgroundColor="DodgerBlue" 
+                                                TextColor="White" 
+                                                CornerRadius="16" 
+                                                FontSize="12" 
+                                                Padding="12,6" 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DashboardViewModel}}, Path=ShowPetActionsCommand}" 
+                                                CommandParameter="{Binding Pet}"/>
+                                        
+                                        <!-- Last Shot Info -->
+                                        <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                     Orientation="Horizontal" 
+                                                     Spacing="16" 
+                                                     Margin="0,8,0,0">
+                                            <Label Text="💉 Last Shot:" FontSize="14" FontAttributes="Bold"/>
+                                            <Label Text="{Binding LastShotInfo}" FontSize="14" TextColor="DarkBlue"/>
+                                        </StackLayout>
+                                        
+                                        <!-- Next Shot Info -->
+                                        <StackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                     Orientation="Horizontal" 
+                                                     Spacing="16" 
+                                                     Margin="0,4,0,0">
+                                            <Label Text="⏰ Next Shot:" FontSize="14" FontAttributes="Bold"/>
+                                            <Label Text="{Binding NextShotInfo}" FontSize="14" TextColor="{Binding NextShotColor}"/>
+                                        </StackLayout>
+                                        
+                                        <!-- Schedule Info -->
+                                        <StackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                     Orientation="Horizontal" 
+                                                     Spacing="16" 
+                                                     Margin="0,4,0,0">
+                                            <Label Text="📅 Schedule:" FontSize="14" FontAttributes="Bold"/>
+                                            <Label Text="{Binding ScheduleInfo}" FontSize="14" TextColor="Gray"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Border>
+
+            <!-- Empty State -->
+            <Border BackgroundColor="White" 
+                    Stroke="LightGray" 
+                    StrokeThickness="1" 
+                    StrokeShape="RoundRectangle 12"
+                    Padding="32"
+                    IsVisible="{Binding HasPets, Converter={StaticResource InvertedBoolConverter}}">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Opacity="0.1" Radius="4" Offset="2,2"/>
+                </Border.Shadow>
+                <StackLayout Spacing="16" HorizontalOptions="Center">
+                    <Label Text="🐾" FontSize="64" HorizontalOptions="Center"/>
+                    <Label Text="Welcome to Pet Insulin Logs!" 
+                           FontSize="20" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="Get started by adding your first pet to begin tracking their insulin care." 
+                           FontSize="16" 
+                           TextColor="Gray" 
+                           HorizontalOptions="Center" 
+                           HorizontalTextAlignment="Center" 
+                           LineHeight="1.4"/>
+                    <Button Text="Add Your First Pet" 
+                            BackgroundColor="{DynamicResource Primary}" 
+                            TextColor="White" 
+                            CornerRadius="25" 
+                            HeightRequest="50" 
+                            FontSize="18" 
+                            FontAttributes="Bold" 
+                            Command="{Binding AddPetCommand}"/>
+                    <Button Text="Join with Share Code" 
+                            BackgroundColor="Orange" 
+                            TextColor="White" 
+                            CornerRadius="25" 
+                            HeightRequest="50" 
+                            FontSize="16" 
+                            FontAttributes="Bold" 
+                            Command="{Binding NavigateToOnboardingCommand}"/>
+                </StackLayout>
+            </Border>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -45,6 +45,6 @@ public partial class PetListViewModel : ObservableObject
     [RelayCommand]
     public async Task NavigateToOnboardingAsync()
     {
-        await Shell.Current.GoToAsync("//onboarding");
+        await Shell.Current.GoToAsync("onboarding");
     }
 }

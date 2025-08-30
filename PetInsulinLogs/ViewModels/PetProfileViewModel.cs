@@ -45,4 +45,14 @@ public partial class PetProfileViewModel : ObservableObject
     {
         return await pets.GenerateShareTokenAsync(Pet.PetId, TimeSpan.FromDays(7));
     }
+
+    public async Task LoadPetByIdAsync(string petId)
+    {
+        var pet = await pets.GetAsync(petId);
+        if (pet != null)
+        {
+            Pet = pet;
+            IsReadOnly = false;
+        }
+    }
 }

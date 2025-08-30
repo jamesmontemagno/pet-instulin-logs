@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="PetInsulinLogs.Views.VacationModePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetInsulinLogs.ViewModels"
+             xmlns:models="clr-namespace:PetInsulinLogs.Models"
+             Title="Vacation Mode"
+             x:DataType="vm:VacationModeViewModel">
+
+    <ScrollView Padding="20">
+        <StackLayout Spacing="16">
+
+            <!-- Pet Selection -->
+            <Frame BackgroundColor="{StaticResource Gray100}" Padding="16">
+                <StackLayout Spacing="8">
+                    <Label Text="Select Pet" FontSize="16" FontAttributes="Bold" />
+                    <Picker ItemsSource="{Binding Pets}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedPet}" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Status Message -->
+            <Label Text="{Binding StatusMessage}" 
+                   FontSize="14" 
+                   TextColor="{StaticResource Primary}"
+                   IsVisible="{Binding StatusMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+            <!-- Current Plan Status -->
+            <Frame BackgroundColor="{StaticResource Primary}" 
+                   Padding="16" 
+                   IsVisible="{Binding HasPlan}">
+                <StackLayout>
+                    <Label Text="Current Vacation Plan" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           TextColor="White" />
+                    <Label Text="{Binding CurrentPlan.TargetAm, StringFormat='Target AM: {0:hh\\:mm}'}" 
+                           TextColor="White" />
+                    <Label Text="{Binding CurrentPlan.TargetPm, StringFormat='Target PM: {0:hh\\:mm}'}" 
+                           TextColor="White" />
+                    <Label Text="{Binding CurrentPlan.Active, StringFormat='Status: {0}'}" 
+                           TextColor="White" />
+                    
+                    <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,8,0,0">
+                        <Button Text="Activate" 
+                                Command="{Binding ActivatePlanCommand}"
+                                BackgroundColor="Green"
+                                TextColor="White"
+                                IsVisible="{Binding CurrentPlan.Active, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Button Text="Pause" 
+                                Command="{Binding PausePlanCommand}"
+                                BackgroundColor="Orange"
+                                TextColor="White"
+                                IsVisible="{Binding CurrentPlan.Active}" />
+                        <Button Text="Delete" 
+                                Command="{Binding DeletePlanCommand}"
+                                BackgroundColor="Red"
+                                TextColor="White" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Plan Creation -->
+            <Frame BackgroundColor="{StaticResource Gray100}" Padding="16">
+                <StackLayout Spacing="12">
+                    <Label Text="Create New Vacation Plan" FontSize="16" FontAttributes="Bold" />
+                    
+                    <!-- Target Times -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Target AM Time" FontSize="14" />
+                            <TimePicker Time="{Binding TargetAmTime}" />
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Target PM Time" FontSize="14" />
+                            <TimePicker Time="{Binding TargetPmTime}" />
+                        </StackLayout>
+                    </Grid>
+
+                    <!-- Configuration -->
+                    <StackLayout>
+                        <Label Text="Step Size (minutes)" FontSize="14" />
+                        <Entry Text="{Binding StepMinutes}" Keyboard="Numeric" />
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label Text="Start Date" FontSize="14" />
+                        <DatePicker Date="{Binding StartDate}" />
+                    </StackLayout>
+
+                    <!-- Actions -->
+                    <StackLayout Orientation="Horizontal" Spacing="12">
+                        <Button Text="Preview" 
+                                Command="{Binding GeneratePreviewCommand}"
+                                BackgroundColor="{StaticResource Secondary}"
+                                TextColor="White"
+                                HorizontalOptions="FillAndExpand" />
+                        <Button Text="Create Plan" 
+                                Command="{Binding CreatePlanCommand}"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="White"
+                                HorizontalOptions="FillAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Schedule Preview -->
+            <Frame BackgroundColor="{StaticResource Gray100}" 
+                   Padding="16"
+                   IsVisible="{Binding SchedulePreview.Count, Converter={StaticResource IntNotZeroConverter}}">
+                <StackLayout>
+                    <Label Text="Schedule Preview (First 10 entries)" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,8" />
+                    
+                    <CollectionView ItemsSource="{Binding SchedulePreview}" HeightRequest="300">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:VacationScheduleEntry">
+                                <Grid ColumnDefinitions="Auto,*" Padding="0,4" ColumnSpacing="12">
+                                    <Label Grid.Column="0" 
+                                           Text="{Binding DateTime, StringFormat='{0:MMM dd HH:mm}'}" 
+                                           FontSize="12" 
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding Note}" 
+                                           FontSize="12" 
+                                           TextColor="{StaticResource Gray600}"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}" />
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
