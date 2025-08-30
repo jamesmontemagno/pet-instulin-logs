@@ -7,30 +7,29 @@
     xmlns:views="clr-namespace:PetInsulinLogs.Views"
     Title="PetInsulinLogs">
 
-    <TabBar>
-        <ShellContent
-            Title="Dashboard"
-            ContentTemplate="{DataTemplate views:DashboardPage}"
-            Route="dashboard" />
-        <ShellContent
-            Title="Pets"
-            ContentTemplate="{DataTemplate views:PetListPage}"
-            Route="pets" />
-        <ShellContent
-            Title="Log Shot"
-            ContentTemplate="{DataTemplate views:LogShotPage}"
-            Route="logshot" />
-        <ShellContent
-            Title="History"
-            ContentTemplate="{DataTemplate views:HistoryPage}"
-            Route="history" />
-        <ShellContent
-            Title="Vacation"
-            ContentTemplate="{DataTemplate views:VacationModePage}"
-            Route="vacation" />
-    </TabBar>
+    <!-- Main Dashboard as primary content -->
+    <ShellContent
+        Title="Dashboard"
+        ContentTemplate="{DataTemplate views:DashboardPage}"
+        Route="dashboard" />
 
-    <!-- Onboarding Page -->
+    <!-- Other pages as navigable content -->
+    <ShellContent
+        Title="Pets"
+        ContentTemplate="{DataTemplate views:PetListPage}"
+        Route="pets" />
+    <ShellContent
+        Title="Log Shot"
+        ContentTemplate="{DataTemplate views:LogShotPage}"
+        Route="logshot" />
+    <ShellContent
+        Title="History"
+        ContentTemplate="{DataTemplate views:HistoryPage}"
+        Route="history" />
+    <ShellContent
+        Title="Vacation"
+        ContentTemplate="{DataTemplate views:VacationModePage}"
+        Route="vacation" />
     <ShellContent
         Title="Welcome"
         ContentTemplate="{DataTemplate views:OnboardingPage}"

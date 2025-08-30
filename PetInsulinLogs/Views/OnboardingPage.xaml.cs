@@ -11,7 +11,7 @@ public partial class OnboardingPage : ContentPage
 
     private async void OnAddFirstPetClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//pets/profile");
+        await Shell.Current.GoToAsync("pets/profile");
     }
 
     private async void OnJoinWithCodeClicked(object sender, EventArgs e)
