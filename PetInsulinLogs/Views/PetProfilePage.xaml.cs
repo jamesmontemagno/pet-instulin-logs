@@ -45,7 +45,7 @@ public partial class PetProfilePage : ContentPage, IQueryAttributable
                 await vm.SaveAsync();
                 await DisplayAlert("Success", "Pet information saved successfully!", "OK");
                 // Navigate back to dashboard after saving a pet
-                await Shell.Current.GoToAsync("//dashboard");
+                await Shell.Current.GoToAsync("///dashboard");
             }
             catch (Exception ex)
             {

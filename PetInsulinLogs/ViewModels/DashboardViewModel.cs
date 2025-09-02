@@ -49,7 +49,7 @@ public partial class DashboardViewModel : ObservableObject
             // If no pets exist, navigate to onboarding
             if (pets.Count == 0)
             {
-                await Shell.Current.GoToAsync("onboarding");
+                await Shell.Current.GoToAsync("///onboarding");
                 return;
             }
             
@@ -95,19 +95,19 @@ public partial class DashboardViewModel : ObservableObject
             "Vacation Mode", 
             "Edit Profile");
 
-        switch (action)
+                switch (action)
         {
             case "Log Insulin Shot":
-                await Shell.Current.GoToAsync($"logshot?petId={pet.PetId}");
+                await Shell.Current.GoToAsync($"///logshot?petId={pet.PetId}");
                 break;
             case "View History":
-                await Shell.Current.GoToAsync($"history?petId={pet.PetId}");
+                await Shell.Current.GoToAsync($"///history?petId={pet.PetId}");
                 break;
             case "Vacation Mode":
-                await Shell.Current.GoToAsync($"vacation?petId={pet.PetId}");
+                await Shell.Current.GoToAsync($"///vacation?petId={pet.PetId}");
                 break;
             case "Edit Profile":
-                await Shell.Current.GoToAsync($"pets/profile?petId={pet.PetId}");
+                await Shell.Current.GoToAsync($"///pets/profile?petId={pet.PetId}");
                 break;
         }
     }
@@ -115,31 +115,31 @@ public partial class DashboardViewModel : ObservableObject
     [RelayCommand]
     public async Task NavigateToLogShotAsync()
     {
-        await Shell.Current.GoToAsync("logshot");
+        await Shell.Current.GoToAsync("///logshot");
     }
 
     [RelayCommand]
     public async Task NavigateToHistoryAsync()
     {
-        await Shell.Current.GoToAsync("history");
+        await Shell.Current.GoToAsync("///history");
     }
 
     [RelayCommand]
     public async Task NavigateToVacationAsync()
     {
-        await Shell.Current.GoToAsync("vacation");
+        await Shell.Current.GoToAsync("///vacation");
     }
 
     [RelayCommand]
     public async Task AddPetAsync()
     {
-        await Shell.Current.GoToAsync("pets/profile");
+        await Shell.Current.GoToAsync("///pets/profile");
     }
 
     [RelayCommand]
     public async Task NavigateToOnboardingAsync()
     {
-        await Shell.Current.GoToAsync("onboarding");
+        await Shell.Current.GoToAsync("///onboarding");
     }
 
     private string GetLastShotInfo(LogEntry? lastLog)

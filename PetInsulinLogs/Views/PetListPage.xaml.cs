@@ -22,7 +22,7 @@ public partial class PetListPage : ContentPage
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//pets/profile");
+        await Shell.Current.GoToAsync("///pets/profile");
     }
 
     private async void OnPetTapped(object sender, TappedEventArgs e)
@@ -42,16 +42,16 @@ public partial class PetListPage : ContentPage
             switch (action)
             {
                 case "Log Insulin Shot":
-                    await Shell.Current.GoToAsync($"//logshot?petId={pet.PetId}");
+                    await Shell.Current.GoToAsync($"///logshot?petId={pet.PetId}");
                     break;
                 case "View History":
-                    await Shell.Current.GoToAsync($"//history?petId={pet.PetId}");
+                    await Shell.Current.GoToAsync($"///history?petId={pet.PetId}");
                     break;
                 case "Vacation Mode":
-                    await Shell.Current.GoToAsync($"//vacation?petId={pet.PetId}");
+                    await Shell.Current.GoToAsync($"///vacation?petId={pet.PetId}");
                     break;
                 case "Edit Profile":
-                    await Shell.Current.GoToAsync($"//pets/profile?petId={pet.PetId}");
+                    await Shell.Current.GoToAsync($"///pets/profile?petId={pet.PetId}");
                     break;
             }
         }

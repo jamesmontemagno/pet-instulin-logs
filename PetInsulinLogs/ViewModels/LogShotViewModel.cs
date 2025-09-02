@@ -188,8 +188,8 @@ public partial class LogShotViewModel : ObservableObject
             // Save log entry
             await logRepository.AppendAsync(logEntry);
 
-            // TODO: Navigate back or show success message
-            await Shell.Current.GoToAsync("..");
+            // Navigate back to dashboard after saving a log
+            await Shell.Current.GoToAsync("///dashboard");
         }
         catch (Exception ex)
         {
